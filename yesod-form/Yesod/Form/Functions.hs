@@ -270,9 +270,10 @@ runFormGet form = do
                 Just _ -> Just (Map.unionsWith (++) $ map (\(x, y) -> Map.singleton x [y]) gets, Map.empty)
     getHelper form env
 
-generateFormGet :: MonadHandler m
-                => (Html -> MForm m a)
-                -> m (a, Enctype)
+generateFormGet
+    :: (RenderMessage (HandlerSite m) FormMessage, MonadHandler m)
+    => (Html -> MForm m a)
+    -> m (a, Enctype)
 generateFormGet form = getHelper form Nothing
 
 getKey :: Text
